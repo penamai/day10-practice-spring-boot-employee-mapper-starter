@@ -39,7 +39,7 @@ class CompanyApiTest {
     }
 
     @Test
-    void should_find_companies() throws Exception {
+    void should_return_list_of_companyResponses_when_get_companies() throws Exception {
         Company company = companyRepository.save(getCompanyOOCL());
 
         mockMvc.perform(get("/companies"))
@@ -51,7 +51,7 @@ class CompanyApiTest {
     }
 
     @Test
-    void should_find_company_by_id() throws Exception {
+    void should_return_companyResponse_when_get_companies_given_id() throws Exception {
         Company company = companyRepository.save(getCompanyOOCL());
         employeeRepository.save(getEmployee(company));
 
@@ -64,7 +64,7 @@ class CompanyApiTest {
     }
 
     @Test
-    void should_update_company_name() throws Exception {
+    void should_update_company_name_when_put_companies_given_id_and_companyRequest() throws Exception {
         Company previousCompany = companyRepository.save(new Company(null, "Facebook"));
         CompanyRequest companyUpdateRequest = new CompanyRequest("Meta");
 
@@ -83,7 +83,7 @@ class CompanyApiTest {
     }
 
     @Test
-    void should_delete_company_name() throws Exception {
+    void should_delete_company_when_delete_companies_given_id() throws Exception {
         Company company = companyRepository.save(getCompanyGoogle());
         mockMvc.perform(delete("/companies/{id}", company.getId()))
                 .andExpect(MockMvcResultMatchers.status().is(204));
@@ -92,7 +92,7 @@ class CompanyApiTest {
     }
 
     @Test
-    void should_create_company() throws Exception {
+    void should_return_companyResponse_when_post_companies_given_companyRequest() throws Exception {
         CompanyRequest companyRequest = new CompanyRequest("OOCL");
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -107,7 +107,7 @@ class CompanyApiTest {
     }
 
     @Test
-    void should_find_companies_by_page() throws Exception {
+    void should_return_list_of_companyResponses_when_get_companies_given_pageNumber_and_pageSize() throws Exception {
         Company oocl = companyRepository.save(getCompanyOOCL());
         Company thoughtworks = companyRepository.save(getCompanyThoughtWorks());
         companyRepository.save(getCompanyGoogle());
@@ -126,7 +126,7 @@ class CompanyApiTest {
     }
 
     @Test
-    void should_find_employees_by_companies() throws Exception {
+    void should_return_list_of_employeeResponses_when_get_companies_employees_given_companyId() throws Exception {
         Company oocl = companyRepository.save(getCompanyOOCL());
         Employee employee = employeeRepository.save(getEmployee(oocl));
 
@@ -149,7 +149,6 @@ class CompanyApiTest {
         employee.setCompanyId(company.getId());
         return employee;
     }
-
 
     private static Company getCompanyOOCL() {
         Company company = new Company();

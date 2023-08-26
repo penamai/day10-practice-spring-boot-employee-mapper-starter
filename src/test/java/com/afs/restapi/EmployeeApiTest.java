@@ -35,7 +35,7 @@ class EmployeeApiTest {
     }
 
     @Test
-    void should_find_employees() throws Exception {
+    void should_return_list_of_employeeResponses_when_get_employees() throws Exception {
         Employee bob = employeeRepository.save(getEmployeeBob());
         mockMvc.perform(get("/employees"))
                 .andExpect(MockMvcResultMatchers.status().is(200))
@@ -48,7 +48,7 @@ class EmployeeApiTest {
     }
 
     @Test
-    void should_find_employee_by_gender() throws Exception {
+    void should_return_list_of_employeeResponses_when_get_employees_given_gender() throws Exception {
         Employee bob = employeeRepository.save(getEmployeeBob());
         employeeRepository.save(getEmployeeSusan());
 
@@ -63,7 +63,7 @@ class EmployeeApiTest {
     }
 
     @Test
-    void should_create_employee() throws Exception {
+    void should_return_employeeResponse_when_post_employees_given_employeeRequest() throws Exception {
         EmployeeRequest employeeRequest = new EmployeeRequest("Alice", 24, "Female", 8000);
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -80,7 +80,7 @@ class EmployeeApiTest {
     }
 
     @Test
-    void should_update_employee_age_and_salary() throws Exception {
+    void should_update_employee_age_and_salary_when_put_employees_given_id_and_employeeRequest() throws Exception {
         Employee previousEmployee = employeeRepository.save(new Employee(null,"Json", 22, "Male", 1000));
         EmployeeRequest employeeUpdateRequest = new EmployeeRequest("lisi", 24, "Female", 2000);
 
@@ -102,7 +102,7 @@ class EmployeeApiTest {
     }
 
     @Test
-    void should_find_employee_by_id() throws Exception {
+    void should_return_employeeResponse_when_get_employees_given_id() throws Exception {
         Employee employee = employeeRepository.save(getEmployeeBob());
 
         mockMvc.perform(get("/employees/{id}", employee.getId()))
@@ -115,7 +115,7 @@ class EmployeeApiTest {
     }
 
     @Test
-    void should_find_employees_by_page() throws Exception {
+    void should_return_list_of_employeeResponses_when_get_employees_given_pageNumber_and_pageSize() throws Exception {
         Employee bob = employeeRepository.save(getEmployeeBob());
         Employee susan = employeeRepository.save(getEmployeeSusan());
         employeeRepository.save(getEmployeeLily());
@@ -138,7 +138,7 @@ class EmployeeApiTest {
     }
 
     @Test
-    void should_delete_employee_by_id() throws Exception {
+    void should_delete_employee_when_delete_employees_given_id() throws Exception {
         Employee employee = employeeRepository.save(getEmployeeBob());
 
         mockMvc.perform(delete("/employees/{id}", employee.getId()))
