@@ -64,7 +64,7 @@ class EmployeeApiTest {
 
     @Test
     void should_create_employee() throws Exception {
-        EmployeeRequest employeeRequest = new EmployeeRequest("Alice", 24, "Female", 8000, null);
+        EmployeeRequest employeeRequest = new EmployeeRequest("Alice", 24, "Female", 8000);
 
         ObjectMapper objectMapper = new ObjectMapper();
         String employeeRequestJSON = objectMapper.writeValueAsString(employeeRequest);
@@ -82,7 +82,8 @@ class EmployeeApiTest {
     @Test
     void should_update_employee_age_and_salary() throws Exception {
         Employee previousEmployee = employeeRepository.save(new Employee(null,"Json", 22, "Male", 1000));
-        Employee employeeUpdateRequest = new Employee(previousEmployee.getId(), "lisi", 24, "Female", 2000);
+        EmployeeRequest employeeUpdateRequest = new EmployeeRequest("lisi", 24, "Female", 2000);
+
         ObjectMapper objectMapper = new ObjectMapper();
         String updatedEmployeeJson = objectMapper.writeValueAsString(employeeUpdateRequest);
         mockMvc.perform(put("/employees/{id}", previousEmployee.getId())
