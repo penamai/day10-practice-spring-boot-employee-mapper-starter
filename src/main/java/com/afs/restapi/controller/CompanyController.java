@@ -5,10 +5,12 @@ import com.afs.restapi.service.CompanyService;
 import com.afs.restapi.entity.Employee;
 import com.afs.restapi.service.dto.CompanyRequest;
 import com.afs.restapi.service.dto.CompanyResponse;
+import com.afs.restapi.service.mapper.CompanyMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -22,8 +24,10 @@ public class CompanyController {
     }
 
     @GetMapping
-    public List<Company> getAllCompanies() {
-        return companyService.findAll();
+    public List<CompanyResponse> getAllCompanies() {
+        return companyService.findAll().stream()
+                .map(CompanyMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     @GetMapping(params = {"pageNumber", "pageSize"})
