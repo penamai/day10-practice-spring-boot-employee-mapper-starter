@@ -47,6 +47,7 @@ class CompanyApiTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(company.getId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value(company.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].employees").doesNotExist())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].employeesCount").exists());
     }
 
@@ -103,6 +104,7 @@ class CompanyApiTest {
                 .andExpect(MockMvcResultMatchers.status().is(201))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(notNullValue()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(companyRequest.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employees").doesNotExist())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.employeesCount").exists());
     }
 
@@ -118,10 +120,12 @@ class CompanyApiTest {
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(2))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(oocl.getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].employees").doesNotExist())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].employeesCount").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value(oocl.getName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(thoughtworks.getId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].name").value(thoughtworks.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].employees").doesNotExist())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].employeesCount").exists());
     }
 
