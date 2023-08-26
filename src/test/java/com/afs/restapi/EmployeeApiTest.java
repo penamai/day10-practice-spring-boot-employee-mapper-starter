@@ -144,7 +144,7 @@ class EmployeeApiTest {
         mockMvc.perform(delete("/employees/{id}", employee.getId()))
                 .andExpect(MockMvcResultMatchers.status().is(204));
 
-        assertTrue(employeeRepository.findById(1L).isEmpty());
+        assertTrue(employeeRepository.findById(employee.getId()).isEmpty());
     }
 
     private static Employee getEmployeeBob() {
