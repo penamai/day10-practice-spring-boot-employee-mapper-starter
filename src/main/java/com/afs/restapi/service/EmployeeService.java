@@ -46,8 +46,11 @@ public class EmployeeService {
         employeeRepository.save(toBeUpdatedEmployee);
     }
 
-    public List<Employee> findAllByGender(String gender) {
-        return employeeRepository.findAllByGender(gender);
+    public List<EmployeeResponse> findAllByGender(String gender) {
+        List<Employee> employees = employeeRepository.findAllByGender(gender);
+        return employees.stream()
+                .map(EmployeeMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     public EmployeeResponse create(EmployeeRequest employeeRequest) {
