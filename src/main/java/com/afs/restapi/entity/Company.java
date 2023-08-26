@@ -9,8 +9,8 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany(orphanRemoval = true)
-    @JoinColumn( name = "companyId")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "companyId")
     private List<Employee> employees;
 
     public Company() {
