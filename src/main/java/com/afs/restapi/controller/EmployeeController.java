@@ -4,7 +4,6 @@ import com.afs.restapi.entity.Employee;
 import com.afs.restapi.service.EmployeeService;
 import com.afs.restapi.service.dto.EmployeeRequest;
 import com.afs.restapi.service.dto.EmployeeResponse;
-import com.afs.restapi.service.mapper.EmployeeMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +25,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public Employee getEmployeeById(@PathVariable Long id) {
+    public EmployeeResponse getEmployeeById(@PathVariable Long id) {
         return employeeService.findById(id);
     }
 

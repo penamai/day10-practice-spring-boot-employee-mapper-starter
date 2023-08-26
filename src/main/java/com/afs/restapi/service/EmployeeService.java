@@ -25,9 +25,10 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public Employee findById(Long id) {
-        return employeeRepository.findById(id)
-                .orElseThrow(EmployeeNotFoundException::new);
+    public EmployeeResponse findById(Long id) {
+        Employee employee = employeeRepository.findById(id)
+                                .orElseThrow(EmployeeNotFoundException::new);
+        return EmployeeMapper.toResponse(employee);
     }
 
     public void update(Long id, EmployeeRequest employeeRequest) {
@@ -52,7 +53,7 @@ public class EmployeeService {
     }
 
     public List<Employee> findByPage(Integer pageNumber, Integer pageSize) {
-        Page<Employee> employeesInThePage = employeeRepository.findAll(PageRequest.of(pageNumber-1, pageSize));
+        Page<Employee> employeesInThePage = employeeRepository.findAll(PageRequest.of(pageNumber - 1, pageSize));
         return employeesInThePage.stream().collect(Collectors.toList());
     }
 
