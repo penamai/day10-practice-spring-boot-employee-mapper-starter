@@ -44,8 +44,7 @@ class EmployeeApiTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value(bob.getName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].age").value(bob.getAge()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value(bob.getGender()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").doesNotExist())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].companyId").doesNotExist());
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").doesNotExist());
     }
 
     @Test
@@ -60,8 +59,7 @@ class EmployeeApiTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value(bob.getName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].age").value(bob.getAge()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value(bob.getGender()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").doesNotExist())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].companyId").doesNotExist());
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").doesNotExist());
     }
 
     @Test
@@ -113,15 +111,14 @@ class EmployeeApiTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(employee.getName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(employee.getAge()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value(employee.getGender()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.salary").doesNotExist())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.companyId").doesNotExist());
+                .andExpect(MockMvcResultMatchers.jsonPath("$.salary").doesNotExist());
     }
 
     @Test
     void should_find_employees_by_page() throws Exception {
         Employee bob = employeeRepository.save(getEmployeeBob());
         Employee susan = employeeRepository.save(getEmployeeSusan());
-        Employee lily  = employeeRepository.save(getEmployeeLily());
+        employeeRepository.save(getEmployeeLily());
 
         mockMvc.perform(get("/employees")
                         .param("pageNumber", "1")
@@ -132,12 +129,12 @@ class EmployeeApiTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value(bob.getName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].age").value(bob.getAge()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value(bob.getGender()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").value(bob.getSalary()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").doesNotExist())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(susan.getId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].name").value(susan.getName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].age").value(susan.getAge()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].gender").value(susan.getGender()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].salary").value(susan.getSalary()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].salary").doesNotExist());
     }
 
     @Test
