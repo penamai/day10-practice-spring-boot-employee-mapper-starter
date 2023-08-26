@@ -2,6 +2,7 @@ package com.afs.restapi;
 
 import com.afs.restapi.entity.Employee;
 import com.afs.restapi.repository.EmployeeRepository;
+import com.afs.restapi.service.dto.EmployeeRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,6 +33,7 @@ class EmployeeApiTest {
     void setUp() {
         employeeRepository.deleteAll();
     }
+
     @Test
     void should_find_employees() throws Exception {
         Employee bob = employeeRepository.save(getEmployeeBob());
@@ -44,6 +46,7 @@ class EmployeeApiTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value(bob.getGender()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").value(bob.getSalary()));
     }
+
     @Test
     void should_find_employee_by_gender() throws Exception {
         Employee bob = employeeRepository.save(getEmployeeBob());
@@ -61,19 +64,19 @@ class EmployeeApiTest {
 
     @Test
     void should_create_employee() throws Exception {
-        Employee employee = getEmployeeBob();
+        EmployeeRequest employeeRequest = new EmployeeRequest("Alice", 24, "Female", 8000, null);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String employeeRequest = objectMapper.writeValueAsString(employee);
+        String employeeRequestJSON = objectMapper.writeValueAsString(employeeRequest);
         mockMvc.perform(post("/employees")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(employeeRequest))
+                        .content(employeeRequestJSON))
                 .andExpect(MockMvcResultMatchers.status().is(201))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(notNullValue()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(employee.getName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(employee.getAge()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value(employee.getGender()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(employee.getSalary()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(employeeRequest.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(employeeRequest.getAge()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value(employeeRequest.getGender()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.salary").doesNotExist());
     }
 
     @Test
