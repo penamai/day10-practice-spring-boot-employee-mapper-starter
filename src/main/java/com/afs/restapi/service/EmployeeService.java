@@ -59,8 +59,8 @@ public class EmployeeService {
     }
 
     public List<EmployeeResponse> findByPage(Integer pageNumber, Integer pageSize) {
-        Page<Employee> employeesInThePage = employeeRepository.findAll(PageRequest.of(pageNumber - 1, pageSize));
-        return employeesInThePage.stream()
+        return employeeRepository.findAll(PageRequest.of(pageNumber - 1, pageSize))
+                .stream()
                 .map(EmployeeMapper::toResponse)
                 .collect(Collectors.toList());
     }
