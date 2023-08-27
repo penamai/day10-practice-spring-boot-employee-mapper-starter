@@ -1,11 +1,11 @@
 package com.afs.restapi.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public class CompanyRequest {
-    private String name;
+    private final String name;
 
-    public CompanyRequest(){
-    }
-
+    @JsonCreator
     public CompanyRequest(String name) {
         this.name = name;
     }
